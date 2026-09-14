@@ -69,14 +69,14 @@
         body.style.setProperty("display", "grid", "important");
         body.style.setProperty(
           "grid-template-columns",
-          "120px minmax(0, 1fr)",
+          "110px minmax(0, 1fr)",
           "important"
         );
-        body.style.setProperty("gap", "12px", "important");
+        body.style.setProperty("gap", "10px", "important");
         body.style.setProperty("align-items", "start", "important");
 
-        img.style.setProperty("width", "120px", "important");
-        img.style.setProperty("max-width", "120px", "important");
+        img.style.setProperty("width", "110px", "important");
+        img.style.setProperty("max-width", "110px", "important");
         img.style.setProperty("height", "auto", "important");
         img.style.setProperty("margin", "0", "important");
         img.style.setProperty("display", "block", "important");
