@@ -54,6 +54,52 @@
     });
   }
 
+  function applyResponsiveHimariLayout() {
+    var isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+    document.querySelectorAll(".himari-note").forEach(function (box) {
+      var body = box.querySelector(".himari-note-body");
+      var img = box.querySelector(".himari-note-image");
+      var text = box.querySelector(".himari-note-text");
+
+      if (!body || !img || !text) return;
+
+      if (isMobile) {
+        /* スマホ版：省スペース2カラム */
+        body.style.setProperty("display", "grid", "important");
+        body.style.setProperty(
+          "grid-template-columns",
+          "120px minmax(0, 1fr)",
+          "important"
+        );
+        body.style.setProperty("gap", "12px", "important");
+        body.style.setProperty("align-items", "start", "important");
+
+        img.style.setProperty("width", "120px", "important");
+        img.style.setProperty("max-width", "120px", "important");
+        img.style.setProperty("height", "auto", "important");
+        img.style.setProperty("margin", "0", "important");
+        img.style.setProperty("display", "block", "important");
+
+        text.style.setProperty("min-width", "0", "important");
+      } else {
+        /* PC版：既存CSSへ戻す */
+        body.style.removeProperty("display");
+        body.style.removeProperty("grid-template-columns");
+        body.style.removeProperty("gap");
+        body.style.removeProperty("align-items");
+
+        img.style.removeProperty("width");
+        img.style.removeProperty("max-width");
+        img.style.removeProperty("height");
+        img.style.removeProperty("margin");
+        img.style.removeProperty("display");
+
+        text.style.removeProperty("min-width");
+      }
+    });
+  }
+
   function neutralizeLegacyPseudoTags() {
     document.querySelectorAll(".article-body-inner p").forEach(function (p) {
       if (p.dataset.otlLegacyTags === "1") return;
@@ -64,7 +110,9 @@
       var names = raw
         .replace(/^タグ\s*[:：]\s*/, "")
         .split("/")
-        .map(function (s) { return s.trim(); })
+        .map(function (s) {
+          return s.trim();
+        })
         .filter(Boolean);
 
       if (!names.length) return;
@@ -91,6 +139,7 @@
 
   function run() {
     normalizeHimariColumns();
+    applyResponsiveHimariLayout();
     neutralizeLegacyPseudoTags();
   }
 
@@ -99,4 +148,6 @@
   } else {
     run();
   }
+
+  window.addEventListener("resize", applyResponsiveHimariLayout);
 })();
