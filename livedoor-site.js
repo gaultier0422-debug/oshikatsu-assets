@@ -137,7 +137,27 @@
     });
   }
 
+  function makeHeaderHomeLinkClickable() {
+    var title = document.querySelector("#blog-title");
+    if (!title) return;
+    var link = title.querySelector("a");
+    if (!link) {
+      link = document.createElement("a");
+      link.href = "https://oshikatsu.ldblog.jp/";
+      link.setAttribute("aria-label", "推し活タイムラインのトップへ");
+      while (title.firstChild) link.appendChild(title.firstChild);
+      title.appendChild(link);
+    }
+    title.style.setProperty("position", "relative", "important");
+    link.style.setProperty("display", "block", "important");
+    link.style.setProperty("width", "100%", "important");
+    link.style.setProperty("height", "100%", "important");
+    link.style.setProperty("min-height", "inherit", "important");
+    link.style.setProperty("cursor", "pointer", "important");
+  }
+
   function run() {
+    makeHeaderHomeLinkClickable();
     normalizeHimariColumns();
     applyResponsiveHimariLayout();
     neutralizeLegacyPseudoTags();
