@@ -137,27 +137,27 @@
     });
   }
 
-  function makeHeaderHomeLinkClickable() {
-    var title = document.querySelector("#blog-title");
-    if (!title) return;
-    var link = title.querySelector("a");
-    if (!link) {
-      link = document.createElement("a");
-      link.href = "https://oshikatsu.ldblog.jp/";
-      link.setAttribute("aria-label", "推し活タイムラインのトップへ");
-      while (title.firstChild) link.appendChild(title.firstChild);
-      title.appendChild(link);
+  function linkifyHeaderBanner() {
+    var wrap = document.querySelector(".header-inner01");
+    if (!wrap || wrap.querySelector(".otl-header-home-link")) return;
+
+    if (getComputedStyle(wrap).position === "static") {
+      wrap.style.position = "relative";
     }
-    title.style.setProperty("position", "relative", "important");
-    link.style.setProperty("display", "block", "important");
-    link.style.setProperty("width", "100%", "important");
-    link.style.setProperty("height", "100%", "important");
-    link.style.setProperty("min-height", "inherit", "important");
-    link.style.setProperty("cursor", "pointer", "important");
+
+    var overlay = document.createElement("a");
+    overlay.className = "otl-header-home-link";
+    overlay.href = "https://oshikatsu.ldblog.jp/";
+    overlay.setAttribute("aria-label", "推し活タイムライン トップページへ");
+    overlay.style.cssText =
+      "position:absolute;inset:0;z-index:2;display:block;cursor:pointer;";
+
+    wrap.appendChild(overlay);
+    wrap.dataset.otlBannerLinked = "1";
   }
 
   function run() {
-    makeHeaderHomeLinkClickable();
+    linkifyHeaderBanner();
     normalizeHimariColumns();
     applyResponsiveHimariLayout();
     neutralizeLegacyPseudoTags();
